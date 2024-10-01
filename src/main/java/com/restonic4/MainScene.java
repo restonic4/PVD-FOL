@@ -1,5 +1,6 @@
 package com.restonic4;
 
+import com.restonic4.citadel.core.CitadelLauncher;
 import com.restonic4.citadel.core.Window;
 import com.restonic4.citadel.files.parsers.mesh.MeshLoader;
 import com.restonic4.citadel.input.KeyListener;
@@ -51,6 +52,16 @@ public class MainScene extends Scene {
         createScreen(4000, 0, -2.5f, "computer_res1");
         createScreen(5000, 0, -2.5f, "computer_res1");
         createScreen(6000, 0, -2.5f, "computer_res1");
+        createScreen(7000, 0, -2.5f, "computer_res1");
+        createScreen(8000, 0, -2.5f, "computer_res1");
+        createScreen(9000, 0, -2.5f, "computer_res1");
+        createScreen(10000, 0, -2.5f, "computer_res1");
+
+        for (int y = -3; y < 3; y++) {
+            for (int x = -3; x < 3; x++) {
+                createScreen(11000 + x * 4, y * 3, -5f, "computer_res1");
+            }
+        }
 
         super.init();
     }
@@ -73,9 +84,32 @@ public class MainScene extends Scene {
 
         if (slideID == 5) {
             light.getComponent(LightComponent.class).getLightType().adjustAttenuationByRange(1);
+            animateScreens();
+        }
+        else if (slideID == 7) {
+            CitadelLauncher.getInstance().getSettings().setVsync(false);
+            CitadelLauncher.getInstance().getSettings().setFPSCap(2);
+
+            animateScreens();
+        }
+        else if (slideID == 9) {
+            for (int i = 0; i < screens.size(); i++) {
+                GameObject screen = screens.get(i);
+                screen.transform.setRotation(new Quaternionf().rotateY((float) Math.toRadians(-80)).rotateX((float) Math.toRadians(-10)));
+            }
+        }
+        else if (slideID == 10) {
+            for (int i = 0; i < screens.size(); i++) {
+                GameObject screen = screens.get(i);
+                screen.transform.setRotation(new Quaternionf().rotateY((float) Math.toRadians(-90)));
+            }
         }
         else {
+            CitadelLauncher.getInstance().getSettings().setVsync(true);
+            CitadelLauncher.getInstance().getSettings().setFPSCap(144);
             light.getComponent(LightComponent.class).getLightType().adjustAttenuationByRange(20);
+
+            animateScreens();
         }
 
         if (KeyListener.isKeyPressedOnce(GLFW.GLFW_KEY_RIGHT)) {
@@ -84,8 +118,6 @@ public class MainScene extends Scene {
         if (KeyListener.isKeyPressedOnce(GLFW.GLFW_KEY_LEFT)) {
             slideID--;
         }
-
-        animateScreens();
 
         /*if (Window.getInstance().isCursorLocked()) {
             float sensitivity = 0.005f;
