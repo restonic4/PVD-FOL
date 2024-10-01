@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.restonic4'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files('libs/CitadelEngine-0.8.jar')
+}
