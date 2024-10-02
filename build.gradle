@@ -10,5 +10,5 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/CitadelEngine-0.8.jar')
+    implementation files('libs/CitadelEngine-0.8-DEV-1.jar')
 }
